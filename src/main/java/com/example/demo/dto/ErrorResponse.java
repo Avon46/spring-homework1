@@ -1,50 +1,32 @@
 package com.example.demo.dto;
 
-import java.time.LocalDateTime;
-
 public class ErrorResponse {
+
     private int status;
     private String message;
     private String path;
-    private String timestamp;
+    private String timeStamp;
 
-    public ErrorResponse(int status, String message, String path) {
+    public ErrorResponse(int status, String message, String path, String timeStamp) {
         this.status = status;
         this.message = message;
         this.path = path;
-        this.timestamp = LocalDateTime.now().toString();
+        this.timeStamp = timeStamp;
     }
 
     public int getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public String getTimeStamp() {
+        return timeStamp;
     }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-    
 }
