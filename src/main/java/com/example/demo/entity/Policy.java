@@ -4,9 +4,24 @@ import java.time.LocalDate;
 
 import com.example.demo.enums.PolicyStatus;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "policies")
 public class Policy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String PolicyNo;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
     private String productName;
     private Integer premium;
@@ -18,9 +33,8 @@ public class Policy {
     public Policy() {
     }
 
-    public Policy(Integer id, String PolicyNo, Customer customer, String productName, Integer premium,
+    public Policy(String PolicyNo, Customer customer, String productName, Integer premium,
             Integer insuredAmount, LocalDate startDate, LocalDate endDate, PolicyStatus status) {
-        this.id = id;
         this.PolicyNo = PolicyNo;
         this.customer = customer;
         this.productName = productName;

@@ -9,25 +9,23 @@ import com.example.demo.entity.Customer;
 import com.example.demo.enums.CustomerStatus;
 import com.example.demo.exception.CustomerNotFoundException;
 import com.example.demo.exception.InvalidCustomerException;
-import com.example.demo.mapper.CustomerMapper;
+import com.example.demo.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-    private final CustomerMapper customerMapper;
+
+    private final CustomerRepository customerRepository;
 
     public List<Customer> getAllCustomers() {
-        return customerMapper.findAll();
+        return customerRepository.findAll();
     }
 
-    public Customer getByIdCustomer(int id) {
-        Customer customer = customerMapper.findById(id);
-        if (customer == null) {
-            throw new CustomerNotFoundException("找不到客戶id = " + id);
-        }
-        return customer;
+    public Customer getByIdCustomer(Integer id) {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("找不到客戶id = " + id));
     }
 
     public Customer createCustomer(CreateCustomerRequest ccr) {
@@ -38,36 +36,38 @@ public class CustomerService {
         if (ccr.getIdentityNumber() == null || ccr.getIdentityNumber().isBlank()) {
             throw new InvalidCustomerException("身分證字號不能為空");
         }
+
         Customer customer = new Customer(
-                null, ccr.getName(), ccr.getPhone(), ccr.getEmail(), ccr.getIdentityNumber(),
-                ccr.getBirthday(), CustomerStatus.ACTIVE);
-        customerMapper.insert(customer);
-        return customer;
+                ccr.getName(),
+                ccr.getPhone(),
+                ccr.getEmail(),
+                ccr.getIdentityNumber(),
+                ccr.getBirthday(),
+                CustomerStatus.ACTIVE);
+
+        return customerRepository.save(customer);
     }
 
     public Customer updateCustomer(Integer id, CreateCustomerRequest ccr) {
-        Customer customer = customerMapper.findById(id);
-        if (customer == null) {
-            throw new CustomerNotFoundException("找不到客戶，id = " + id);
-        }
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("找不到客戶，id = " + id));
 
         if (ccr.getName() == null || ccr.getName().isBlank()) {
             throw new InvalidCustomerException("客戶姓名不能為空");
         }
+
         customer.setName(ccr.getName());
         customer.setPhone(ccr.getPhone());
         customer.setEmail(ccr.getEmail());
         customer.setBirthday(ccr.getBirthday());
-        customerMapper.update(customer);
-        return customerMapper.findById(id);
+
+        return customerRepository.save(customer);
     }
 
     public void deleteCustomer(Integer id) {
-        Customer customer = customerMapper.findById(id);
-        if (customer == null) {
-            throw new CustomerNotFoundException("找不到客戶，id = " + id);
-        }
-        customerMapper.deleteById(id);
-    }
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("找不到客戶，id = " + id));
 
+        customerRepository.delete(customer);
+    }
 }

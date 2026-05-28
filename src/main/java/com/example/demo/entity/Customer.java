@@ -4,21 +4,34 @@ import java.time.LocalDate;
 
 import com.example.demo.enums.CustomerStatus;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "customers")
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String name;
     private String phone;
     private String email;
     private String identityNumber;
     private LocalDate birthday;
+    @Enumerated(EnumType.STRING)
     private CustomerStatus status;
 
     public Customer() {
     }
 
-    public Customer(Integer id, String name, String phone, String email, String identityNumber, LocalDate birthday,
+    public Customer(String name, String phone, String email, String identityNumber, LocalDate birthday,
             CustomerStatus status) {
-        this.id = id;
         this.name = name;
         this.phone = phone;
         this.email = email;

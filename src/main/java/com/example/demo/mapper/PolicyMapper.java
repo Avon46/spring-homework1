@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.entity.Policy;
 
-@Mapper
+//@Mapper
 public interface PolicyMapper {
 
     @Select("""

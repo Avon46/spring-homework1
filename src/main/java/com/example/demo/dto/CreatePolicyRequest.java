@@ -3,34 +3,29 @@ package com.example.demo.dto;
 import java.time.LocalDate;
 
 public class CreatePolicyRequest {
-    private String PolicyNo;
+
     private Integer customerId;
+    private String policyNo;
     private String productName;
     private Integer premium;
     private Integer insuredAmount;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public CreatePolicyRequest() {
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public CreatePolicyRequest(Integer customerId,String PolicyNo, String productName, Integer premium,
-            Integer insuredAmount, LocalDate startDate, LocalDate endDate) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
-        this.PolicyNo = PolicyNo;
-        this.productName = productName;
-        this.premium = premium;
-        this.insuredAmount = insuredAmount;
-        this.startDate = startDate;
-        this.endDate = endDate;
     }
 
     public String getPolicyNo() {
-        return PolicyNo;
+        return policyNo;
     }
 
     public void setPolicyNo(String policyNo) {
-        PolicyNo = policyNo;
+        this.policyNo = policyNo;
     }
 
     public String getProductName() {
@@ -71,13 +66,5 @@ public class CreatePolicyRequest {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-    }
-
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
     }
 }
