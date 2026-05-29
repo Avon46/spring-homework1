@@ -41,8 +41,13 @@ public class PolicyService {
     public PolicyResponse createPolicy(CreatePolicyRequest request) {
         validateCreatePolicyRequest(request);
 
+        if (policyRepository.existsByPolicyNo(request.getPolicyNo())) {
+            throw new InvalidPolicyException("保單編號已存在：" + request.getPolicyNo());
+        }
+
         Customer customer = customerRepository.findById(request.getCustomerId())
-                .orElseThrow(() -> new CustomerNotFoundException("找不到客戶，id = " + request.getCustomerId()));
+                .orElseThrow(() -> new CustomerNotFoundException(
+                        "找不到客戶，id = " + request.getCustomerId()));
 
         Policy policy = PolicyDtoMapper.toEntity(request, customer);
 
@@ -50,6 +55,7 @@ public class PolicyService {
 
         return PolicyDtoMapper.toResponse(savedPolicy);
     }
+
 
     public PolicyResponse cancelPolicy(Integer id) {
         Policy policy = policyRepository.findById(id)
