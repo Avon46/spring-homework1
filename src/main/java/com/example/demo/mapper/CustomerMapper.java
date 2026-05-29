@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.entity.Customer;
 
-//@Mapper
+//@Mapper//
 public interface CustomerMapper {
 
     @Select("""
