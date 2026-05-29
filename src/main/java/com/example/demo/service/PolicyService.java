@@ -56,7 +56,6 @@ public class PolicyService {
         return PolicyDtoMapper.toResponse(savedPolicy);
     }
 
-
     public PolicyResponse cancelPolicy(Integer id) {
         Policy policy = policyRepository.findById(id)
                 .orElseThrow(() -> new PolicyNotFoundException("找不到保單，id = " + id));

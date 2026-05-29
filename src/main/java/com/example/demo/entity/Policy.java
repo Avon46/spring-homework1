@@ -20,7 +20,7 @@ public class Policy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "policy_no", nullable = false, unique = true)
-    private String PolicyNo;
+    private String policyNo;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -37,7 +37,7 @@ public class Policy {
 
     public Policy(String PolicyNo, Customer customer, String productName, Integer premium,
             Integer insuredAmount, LocalDate startDate, LocalDate endDate, PolicyStatus status) {
-        this.PolicyNo = PolicyNo;
+        this.policyNo = PolicyNo;
         this.customer = customer;
         this.productName = productName;
         this.premium = premium;
@@ -56,11 +56,11 @@ public class Policy {
     }
 
     public String getPolicyNo() {
-        return PolicyNo;
+        return policyNo;
     }
 
     public void setPolicyNo(String policyNo) {
-        PolicyNo = policyNo;
+        this.policyNo = policyNo;
     }
 
     public Customer getCustomer() {
